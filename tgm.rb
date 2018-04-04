@@ -40,7 +40,7 @@ def get_data(chat_id,report,*shop)
     	#p shop[0]
     	shop_name = $pg.exec("SELECT shop from #{$data_table}  where shop like '#{shop[0]}%'")[0]['shop']
     	cross = $pg.exec("select (sum(goods)::float/sum(cheks)) AS cross from #{$data_table} where shop like '#{shop[0]}%'")[0]["cross"].to_f.round(2).to_s
-		mid_check = $pg.exec("select (sum(gross)::float/sum(cheks)) AS mid_check from #{$data_table} where shop like '#{shop[0]}%'")[0]["mid_check"] 
+	mid_check = $pg.exec("select (sum(gross)::float/sum(cheks)) AS mid_check from #{$data_table} where shop like '#{shop[0]}%'")[0]["mid_check"] 
     	gross = $pg.exec("SELECT gross from #{$data_table}  where shop like '#{shop[0]}%'")[0]['gross']
     	#p gross
     	#p cross
@@ -76,7 +76,7 @@ end
 def totals(chat_id)
 	# подвал, добавлят сцммц гросс и дату обновления данных
     if check_perms(chat_id).to_i == 1
-		sum = number_format($pg.exec("SELECT SUM(gross) FROM #{$data_table}")[0]["sum"])
+	sum = number_format($pg.exec("SELECT SUM(gross) FROM #{$data_table}")[0]["sum"])
     else
     	sum = number_format($pg.exec("SELECT SUM(gross) FROM #{$data_table} AS t1 INNER JOIN #{$users_table} AS t2 ON t1.depart_code = t2.depart_code INNER JOIN #{$chat_id_table} AS t3 ON t2.login = t3.login WHERE t3.chat_id = #{chat_id}")[0]["sum"])
     end
@@ -88,7 +88,7 @@ end
 def send_message(chat_id,messages)
 	messages.each do | message |
    		$tgm.send_message(chat_id: chat_id, parse_mode: 'Markdown', text: message )
-    end
+    	end
 end
 
 def str_format(shop,gross)
