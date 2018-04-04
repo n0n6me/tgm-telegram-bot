@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# PROVIDE: utility
+# REQUIRE: DAEMON
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name=tgm
+rcvar=tgm_pidfile
+
+command="/usr/local/sbin/tgm.rb"
+command_args="start >> /var/log/tgm.log 2>&1 &"
+
+load_rc_config $name
+
+
+utility_enable=${tgm_enable-"NO"}
+pidfile=${tgm_pidfile-"/var/run/tgm.pid"}
+
+run_rc_command "$1"
